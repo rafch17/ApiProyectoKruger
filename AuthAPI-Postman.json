@@ -1,0 +1,110 @@
+{
+  "info": {
+    "name": "AuthAPI",
+    "description": "API GraphQL con Autenticación JWT",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8080/graphql"},
+    {"key": "token", "value": ""}
+  ],
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\"query\": \"mutation { register(username: \\\"test\\\", password: \\\"test123\\\") }\"}"}
+      }
+    },
+    {
+      "name": "RegisterAdmin",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\"query\": \"mutation { registerAdmin(username: \\\"admin\\\", password: \\\"admin123\\\", adminToken: \\\"admin-secret-token\\\") }\"}"}
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\"query\": \"mutation { login(username: \\\"test\\\", password: \\\"test123\\\") { token } }\"}"}
+      }
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\"query\": \"mutation { logout(token: \\\"{{token}}\\\") }\"}"}
+      }
+    },
+    {
+      "name": "GetProducts",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{token}}"}
+        ],
+        "body": {"mode": "raw", "raw": "{\"query\": \"{ products { id name price } }\"}"}
+      }
+    },
+    {
+      "name": "CreateProduct",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{token}}"}
+        ],
+        "body": {"mode": "raw", "raw": "{\"query\": \"mutation { createProduct(input: {name: \\\"Producto\\\", price: 10.5}) { id name } }\"}"}
+      }
+    },
+    {
+      "name": "MyOrders",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{token}}"}
+        ],
+        "body": {"mode": "raw", "raw": "{\"query\": \"{ myOrders { id total status } }\"}"}
+      }
+    },
+    {
+      "name": "CreateOrder",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{token}}"}
+        ],
+        "body": {"mode": "raw", "raw": "{\"query\": \"mutation { createOrder(input: {items: [{productId: \\\"1\\\", quantity: 2}]}) { id total status } }\"}"}
+      }
+    },
+    {
+      "name": "UpdateOrderStatus",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{token}}"}
+        ],
+        "body": {"mode": "raw", "raw": "{\"query\": \"mutation { updateOrderStatus(id: \\\"1\\\", status: CONFIRMED) { id status } }\"}"}
+      }
+    }
+  ]
+}
+

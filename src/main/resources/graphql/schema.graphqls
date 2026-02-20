@@ -1,0 +1,83 @@
+type Query {
+    products: [Product!]!
+    product(id: ID!): Product
+    
+    myOrders: [Order!]!
+    allOrders: [Order!]!
+    order(id: ID!): Order
+}
+
+type Mutation {
+    login(username: String!, password: String!): LoginResponse!
+    register(username: String!, password: String!): String!
+    registerAdmin(username: String!, password: String!, adminToken: String!): String!
+    logout(token: String!): String!
+    
+    createProduct(input: ProductInput!): Product!
+    updateProduct(id: ID!, input: ProductInput!): Product!
+    deleteProduct(id: ID!): Boolean!
+    
+    createOrder(input: OrderInput!): Order!
+    updateOrderStatus(id: ID!, status: OrderStatus!): Order!
+}
+
+type Product {
+    id: ID!
+    name: String!
+    description: String
+    price: Float!
+}
+
+input ProductInput {
+    name: String!
+    description: String
+    price: Float!
+}
+
+type LoginResponse {
+    token: String!
+}
+
+type Order {
+    id: ID!
+    user: User!
+    items: [OrderItem!]!
+    total: Float!
+    status: OrderStatus!
+    createdAt: String!
+}
+
+type OrderItem {
+    id: ID!
+    product: Product!
+    quantity: Int!
+    price: Float!
+}
+
+type User {
+    id: ID!
+    username: String!
+    role: Role!
+}
+
+enum OrderStatus {
+    PENDING
+    CONFIRMED
+    SHIPPED
+    DELIVERED
+    CANCELLED
+}
+
+enum Role {
+    USER
+    ADMIN
+}
+
+input OrderItemInput {
+    productId: ID!
+    quantity: Int!
+}
+
+input OrderInput {
+    items: [OrderItemInput!]!
+}
