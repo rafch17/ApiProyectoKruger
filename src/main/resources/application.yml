@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/curso_sq15
-    username: sq15
-    password: secret
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/curso_sq15}
+    username: ${SPRING_DATASOURCE_USERNAME:sq15}
+    password: ${SPRING_DATASOURCE_PASSWORD:secret}
   jpa:
     hibernate:
       ddl-auto: update
@@ -15,4 +15,4 @@ spring:
       mode: always
 
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
