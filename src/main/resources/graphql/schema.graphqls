@@ -36,6 +36,8 @@ input ProductInput {
 
 type LoginResponse {
     token: String!
+    username: String!
+    role: String!
 }
 
 type Order {

@@ -43,7 +43,8 @@ public class AuthResolver {
                 .toList();
 
         String token = jwtService.generateToken(result.getName(), roles);
-        return new LoginResponse(token);
+        String role = roles.isEmpty() ? "USER" : roles.get(0).replace("ROLE_", "");
+        return new LoginResponse(token, username, role);
     }
 
     @MutationMapping
